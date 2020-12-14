@@ -53,8 +53,8 @@ ONBUILD ARG GIT_BUILD_VERSION=unknown
 ONBUILD ENV GIT_BUILD_VERSION=$GIT_BUILD_VERSION
 # Copy everything in the Dockerfile folder into this image
 # Use the .dockerignore to exclude files from being copied
-ONBUILD COPY .build /home/mecodia/.build
-ONBUILD COPY setup.py /home/mecodia
+ONBUILD COPY .build /home/devops/.build
+ONBUILD COPY setup.py /home/devops
 # Install additional packages we need, like image libaries
 ONBUILD RUN apk add --no-cache $(cat .build/runtime-packages.txt | sed -e ':a;N;$!ba;s/\n/ /g') && \
             # Install packages we need to install a python packages that needs to be compiled. These will be deleted afterwards.
@@ -62,7 +62,7 @@ ONBUILD RUN apk add --no-cache $(cat .build/runtime-packages.txt | sed -e ':a;N;
             # Install the current folder as editable so we have it on the pythonpath but don't need to actually package it
             pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -e . && \
             # Remove build packages and chown everything in here for our user
-            apk del build-deps && chown -R mecodia:mecodia .
+            apk del build-deps && chown -R devops:devops .
 # Run everything afterwards as the mecodia user
-ONBUILD COPY . /home/mecodia
-ONBUILD USER mecodia
+ONBUILD COPY . /home/devops
+ONBUILD USER devops
