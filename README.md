@@ -1,7 +1,5 @@
 # Docker Base Image for mecodia GmbH Django Projects
 
-[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/mecodia/python-base/latest)](https://hub.docker.com/r/mecodia/python-base)
-
 This image was specifically crafted to be as small as possible while also giving a good basic packaging.
 We are trying to follow the best practices of Docker and Kubernetes with this image to improve speed and security.
 
