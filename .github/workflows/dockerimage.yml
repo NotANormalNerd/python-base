@@ -1,8 +1,8 @@
 name: Publish Docker
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*.*.*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +14,7 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=ghcr.io/notanormalnerd/python-base
-          VERSION=latest
+          VERSION=${GITHUB_REF##*/}
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
           echo ::set-output name=version::${VERSION}
           echo ::set-output name=tags::${TAGS}
