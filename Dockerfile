@@ -23,9 +23,9 @@ RUN apk add --no-cache uwsgi=~2.0.18 uwsgi-python3 uwsgi-spooler uwsgi-cache \
     pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir psycopg2-binary psycopg2 && \
     apk del build-deps && \
     # Add a user and a group to use for execution so we follow best practices
-    addgroup -S mecodia && adduser -S mecodia -G mecodia
+    addgroup -S devops && adduser -S devops -G devops
 
-WORKDIR /home/mecodia
+WORKDIR /home/devops
 # Set sane defaults following this blogpost:
 # https://www.techatbloomberg.com/blog/configuring-uwsgi-production-deployment/
 ENV UWSGI_STRICT=1 \
@@ -43,7 +43,7 @@ ENV UWSGI_STRICT=1 \
     UWSGI_PLUGINS=python3,spooler,cache \
     # Ignore Errors when client closes the connection prematurely
     UWSGI_IGNORE_SIGPIPE=1 \
-    UWSGI_IGNORE_WRITE-ERRORS=1 \
+    UWSGI_IGNORE_WRITE_ERRORS=1 \
     UWSGI_DISABLE_WRITE_EXCEPTION=1
 
 # Here the real magic happens
@@ -63,6 +63,6 @@ ONBUILD RUN apk add --no-cache $(cat .build/runtime-packages.txt | sed -e ':a;N;
             pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -e . && \
             # Remove build packages and chown everything in here for our user
             apk del build-deps && chown -R devops:devops .
-# Run everything afterwards as the mecodia user
+# Run everything afterwards as the devops user
 ONBUILD COPY . /home/devops
 ONBUILD USER devops
