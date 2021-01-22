@@ -12,16 +12,12 @@ RUN apk add --no-cache uwsgi=~2.0.18 uwsgi-python3 uwsgi-spooler uwsgi-cache \
     # This is good enough for us and enables us to install precompiled packages from apk
     python3=~3.8 py3-pip \
     # Install postgres client for the wait-for-postgres script
-    postgresql-client=~12 && \
+    py3-psycopg2 postgresql-client=~12 && \
     # Link some python3 and pip3 to default pythond and pip
     ln -fs /usr/bin/python3.8 /usr/bin/python && ln -fs /usr/bin/pip3 /usr/bin/pip && \
     # Make the copied files execuable and readable for all
     chmod 755 /usr/local/bin/wait-for-postgres && \
     chmod 655 /usr/lib/python3.8/uwsgidecorators.py && \
-    # Install and build psycopg2-binary and psycopg2, so it does not matter which one a package has in requirements.
-    apk add --no-cache --virtual build-deps gcc python3-dev postgresql-dev musl-dev && \
-    pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir psycopg2-binary psycopg2 && \
-    apk del build-deps && \
     # Add a user and a group to use for execution so we follow best practices
     addgroup -S devops && adduser -S devops -G devops
 
