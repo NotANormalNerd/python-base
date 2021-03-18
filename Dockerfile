@@ -27,7 +27,7 @@ RUN apk add --no-cache uwsgi=~2.0 uwsgi-python3 uwsgi-spooler uwsgi-cache\
 # Tell uwsgi to load defaults
 ENV UWSGI_INI=/etc/uwsgi_defaults.ini
 
-WORKDIR /home/mecodia
+WORKDIR /home/devops
 CMD ["uwsgi"]
 
 # Here the real magic happens
