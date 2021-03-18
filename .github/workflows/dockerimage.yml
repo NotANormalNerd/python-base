@@ -45,9 +45,3 @@ jobs:
             org.opencontainers.image.source=${{ github.event.repository.clone_url }}
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
-      - name: Delete old packages
-        uses: smartsquaregmbh/delete-old-packages@v0.2.0
-        with:
-          keep: 6
-          names: |
-            ${{ steps.prep.outputs.image_name }}
