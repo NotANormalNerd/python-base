@@ -7,10 +7,10 @@ COPY wait-for-postgres.sh /usr/local/bin/wait-for-postgres
 COPY uwsgi.ini /etc/uwsgi_defaults.ini
 
 # Add up to date uwsgidecorators to python
-ADD https://raw.githubusercontent.com/unbit/uwsgi/2.0.18/uwsgidecorators.py /usr/lib/python3.8/uwsgidecorators.py
+# ADD https://raw.githubusercontent.com/unbit/uwsgi/2.0.18/uwsgidecorators.py /usr/lib/python3.8/uwsgidecorators.py
 
 # Install uwsgi and needed plugins
-RUN apk add --no-cache uwsgi=~2.0 uwsgi-python3 uwsgi-spooler uwsgi-cache\
+RUN apk add --no-cache uwsgi=~2.0 uwsgi-python3 uwsgi-spooler uwsgi-cache \
     # Install python3.8 and pip from the alpine repository, since they provide it in alpine 3.13
     # This is good enough for us and enables us to install precompiled packages from apk
     python3=~3.8 py3-pip \
@@ -20,7 +20,7 @@ RUN apk add --no-cache uwsgi=~2.0 uwsgi-python3 uwsgi-spooler uwsgi-cache\
     ln -fs /usr/bin/python3.8 /usr/bin/python && ln -fs /usr/bin/pip3 /usr/bin/pip && \
     # Make the copied files execuable and readable for all
     chmod 755 /usr/local/bin/wait-for-postgres && \
-    chmod 655 /usr/lib/python3.8/uwsgidecorators.py && \
+    # chmod 655 /usr/lib/python3.8/uwsgidecorators.py && \
     # Add a user and a group to use for execution so we follow best practices
     addgroup -S devops && adduser -S devops -G devops
 
